@@ -26,16 +26,21 @@ class CourierManager
      */
     public function addCourier($class)
     {
-        $courier = '\\Octommerce\\Courier\\Contracts\Courier';
+        $baseCourier = '\\Octommerce\\Courier\\Contracts\Courier';
+        $courier = new $class;
 
-        if ( ! (new $class) instanceof $courier) {
-            throw new ApplicationException(sprintf('class %s must instanceof %s', $class, $courier));
+        if ( ! $courier instanceof $baseCourier) {
+            throw new ApplicationException(sprintf('class %s must instanceof %s', $courier, $baseCourier));
         }
 
         // Don't add courier twice
-        if (in_array($class, $this->couriers)) return $this->couriers;
+        if (in_array($courier->alias, $this->couriers)) return $this->couriers;
 
-        $this->couriers[] = $class;
+        $this->couriers[$courier->alias] = [
+            'name'        => $courier->name,
+            'description' => $courier->description,
+            'class'       => $class
+        ];
 
         return $this->couriers;
     }
