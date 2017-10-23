@@ -62,4 +62,15 @@ class CourierManager
             return array_get($courier, 'name');
         })->toArray();
     }
+
+    public function findByAlias($alias)
+    {
+        $courier = array_get($this->couriers, $alias);
+
+        if (is_null($courier)) {
+            throw new ApplicationException('Courier not found');
+        }
+
+        return (new $courier['class']);
+    }
 }
