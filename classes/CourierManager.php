@@ -44,4 +44,22 @@ class CourierManager
 
         return $this->couriers;
     }
+
+    /**
+     * Get couriers
+     * [ 'alias' => 'name' ], ...
+     *
+     * @param boolean $activeOnly
+     * @return array 
+     */
+    public function getCouriers($activeOnly = false)
+    {
+        if ($activeOnly) {
+            // Only active couriers
+        }
+
+        return collect($this->couriers)->map(function($courier) {
+            return array_get($courier, 'name');
+        })->toArray();
+    }
 }
