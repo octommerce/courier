@@ -1,11 +1,11 @@
-{% if countries|length %}
-    <label for="">Countries</label>
+{% if states|length %}
+    <label for="">States</label>
     <select 
            class="form-control select2"
-           data-request="onSelectCountry" 
-           name="country" 
+           data-request="onSelectState" 
+           name="state" 
            required>
-        {% for alias, name in countries %}
+        {% for alias, name in states %}
         <option value="{{ alias }}">{{ name }}</option>
         {% endfor %}
     </select>

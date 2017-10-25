@@ -28,8 +28,11 @@ class Cost extends ComponentBase
         $courierManager = CourierManager::instance();
 
         $courier = $courierManager->findByAlias(post('courier'));
+        $this->page['countries'] = $countries = $courier->getCountries();
 
-        $this->page['countries'] = $courier->getCountries();
+        if (empty($countries)) {
+            $this->page['states'] = $courier->getStates();
+        }
     }
 
     public function getCouriers()

@@ -4,7 +4,7 @@
             <select 
                 class="form-control select2" id="couriers"
                 data-request="onSelectCourier" 
-                data-request-update="'{{ __SELF__ }}::country': '#country'" 
+                data-request-update="'{{ __SELF__ }}::country': '#country', '{{ __SELF__ }}::state': '#state'" 
                 name="courier" 
                 required>
                 <option value="" selected disabled>Select courier</option>
@@ -15,5 +15,8 @@
     </div>
     <div class="col-md-3" id="country">
         {% partial __SELF__ ~ '::country' %}
+    </div>
+    <div class="col-md-3" id="state">
+        {% partial __SELF__ ~ '::state' %}
     </div>
 </div>
