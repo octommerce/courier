@@ -27,9 +27,9 @@ class Cost extends ComponentBase
          **/
         if (count($couriers) == 1) {
             $couriers = array_flip($couriers);
-            $courier = end($couriers);
+            $courierAlias = end($couriers);
 
-            $this->fetchShippingDestinations($courier);
+            $this->fetchShippingDestinations($courierAlias);
         }
     }
 
@@ -46,7 +46,7 @@ class Cost extends ComponentBase
      */
     public function fetchShippingDestinations($courierAlias)
     {
-        $courier = $this->getCourier($courier);
+        $courier = $this->getCourier($courierAlias);
         $this->page['countries'] = $countries = $courier->getCountries();
 
         if (empty($countries)) {
@@ -59,9 +59,9 @@ class Cost extends ComponentBase
         return $this->courierManager()->getCouriers($activeOnly = false);
     }
 
-    protected function getCourier($alias)
+    protected function getCourier($alias = null)
     {
-        return $this->courierManager()->findByAlias($courier);
+        return $this->courierManager()->findByAlias($alias);
     }
 
     private function courierManager()
