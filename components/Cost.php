@@ -20,14 +20,35 @@ class Cost extends ComponentBase
 
     public function onRun()
     {
-        $this->page['couriers'] = $this->getCouriers();
+        $this->page['couriers'] = $couriers = $this->getCouriers();
+
+        /**
+         * If only one courier, get the available shipping destinations
+         **/
+        if (count($couriers) == 1) {
+            $couriers = array_flip($couriers);
+            $courier = end($couriers);
+
+            $this->fetchShippingDestinations($courier);
+        }
     }
 
     public function onSelectCourier()
     {
+        $this->fetchShippingDestinations(post('courier'));
+    }
+
+    /**
+     * Fetch shipping destinations
+     * Set countries or states into page variable
+     *
+     * @param string $courier Courier alias
+     */
+    public function fetchShippingDestinations($courier)
+    {
         $courierManager = CourierManager::instance();
 
-        $courier = $courierManager->findByAlias(post('courier'));
+        $courier = $courierManager->findByAlias($courier);
         $this->page['countries'] = $countries = $courier->getCountries();
 
         if (empty($countries)) {
