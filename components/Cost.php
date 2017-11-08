@@ -42,9 +42,9 @@ class Cost extends ComponentBase
      * Fetch shipping destinations
      * Set countries or states into page variable
      *
-     * @param string $courier Courier alias
+     * @param string $courierAlias Courier alias
      */
-    public function fetchShippingDestinations($courier)
+    public function fetchShippingDestinations($courierAlias)
     {
         $courier = $this->getCourier($courier);
         $this->page['countries'] = $countries = $courier->getCountries();
