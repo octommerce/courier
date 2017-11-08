@@ -46,9 +46,7 @@ class Cost extends ComponentBase
      */
     public function fetchShippingDestinations($courier)
     {
-        $courierManager = CourierManager::instance();
-
-        $courier = $courierManager->findByAlias($courier);
+        $courier = $this->getCourier($courier);
         $this->page['countries'] = $countries = $courier->getCountries();
 
         if (empty($countries)) {
@@ -58,6 +56,16 @@ class Cost extends ComponentBase
 
     public function getCouriers()
     {
-        return CourierManager::instance()->getCouriers($activeOnly = false);
+        return $this->courierManager()->getCouriers($activeOnly = false);
+    }
+
+    protected function getCourier($alias)
+    {
+        return $this->courierManager()->findByAlias($courier);
+    }
+
+    private function courierManager()
+    {
+        return CourierManager::instance();
     }
 }
