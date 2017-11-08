@@ -61,6 +61,10 @@ class Cost extends ComponentBase
 
     protected function getCourier($alias = null)
     {
+        if (is_null($alias)) {
+            $alias = post('courier');
+        }
+        
         return $this->courierManager()->findByAlias($alias);
     }
 
