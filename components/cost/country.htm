@@ -2,7 +2,7 @@
     <label for="">Countries</label>
     <select 
            class="form-control select2"
-           data-request="onSelectCountry" 
+           data-request="{{ __SELF__ ~ '::onSelectCountry' }}" 
            name="country" 
            required>
         {% for alias, name in countries %}

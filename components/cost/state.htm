@@ -2,7 +2,7 @@
     <label for="">States</label>
     <select 
            class="form-control select2"
-           data-request="onSelectState" 
+           data-request="{{ __SELF__ ~ '::onSelectState' }}" 
            name="state" 
            required>
         {% for alias, name in states %}
