@@ -35,4 +35,6 @@ abstract class Courier
     abstract public function isFree($data);
 
     abstract public function getCosts($data);
+
+    abstract public function track($awb);
 }
