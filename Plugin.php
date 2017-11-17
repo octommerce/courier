@@ -2,6 +2,7 @@
 
 use Backend;
 use System\Classes\PluginBase;
+use Octommerce\Courier\Classes\CourierManager;
 
 /**
  * courier Plugin Information File
@@ -40,7 +41,7 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        CourierManager::instance()->addCourier('Octommerce\Courier\Couriers\Jne');
     }
 
     /**
