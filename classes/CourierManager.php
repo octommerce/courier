@@ -1,6 +1,7 @@
 <?php namespace Octommerce\Courier\Classes;
 
 use ApplicationException;
+use Http;
 
 class CourierManager
 {
