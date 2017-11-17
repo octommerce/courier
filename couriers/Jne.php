@@ -58,4 +58,9 @@ class Jne extends Courier
     {
     
     }
+
+    public function generateAwb($data) 
+    {
+    
+    }
 }
