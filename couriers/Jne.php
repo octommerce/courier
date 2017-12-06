@@ -116,7 +116,7 @@ class Jne extends Courier
     {
         $body = json_decode($response->body);
 
-        if (isset($body->error) && isset($body->error->message)) return $body->error->message;
+        if (isset($body->error)) return $body->error;
 
         return $defaultMsg;
     }
