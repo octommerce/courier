@@ -68,9 +68,8 @@ class Jne extends Courier
             });
 
             if ($response->code != 200) {
-                    throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
-                }
-
+                throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
+            }
         }catch(Exception $e){
             throw new SystemException($e->getMessage());
         }
