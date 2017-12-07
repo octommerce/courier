@@ -92,4 +92,20 @@ class Plugin extends PluginBase
             ],
         ];
     }
+
+    /**
+     * Register new Twig variables
+     * @return array
+     */
+    public function registerMarkupTags()
+    {
+        return [
+            'functions' => [
+                'form_select_province'    => ['Octommerce\Courier\Models\Location', 'formSelectProvince'],
+                'form_select_city'        => ['Octommerce\Courier\Models\Location', 'formSelectCity'],
+                'form_select_district'    => ['Octommerce\Courier\Models\Location', 'formSelectDistrict'],
+                'form_select_subdistrict' => ['Octommerce\Courier\Models\Location', 'formSelectSubdistrict'],
+            ]
+        ];
+    }
 }

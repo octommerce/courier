@@ -1,0 +1,68 @@
+{% set province = province|default(form_value('province')) %}
+{% set city = city|default(form_value('city')) %}
+{% set district = district|default(form_value('district')) %}
+{% set subdistrict = subdistrict|default(form_value('subdistrict')) %}
+
+<div class="form-group">
+    <label for="accountProvince">Province</label>
+    {{ form_select_province('province', province, {
+        id: 'accountProvince',
+        class: 'form-control',
+        emptyOption: '',
+        'data-request': 'onInit',
+        'data-request-update': {
+            (__SELF__ ~ '::locations'): '#partialLocations'
+        }
+    }) }}
+</div>
+
+<div class="form-group">
+    <label for="accountCity">City</label>
+    {{ form_select_city('city', province, city, {
+        id: 'accountCity',
+        class: 'form-control',
+        emptyOption: '',
+        'data-request': 'onInit',
+        'data-request-data': {
+            'province': province
+        },
+        'data-request-update': {
+            (__SELF__ ~ '::locations'): '#partialLocations'
+        }
+    }) }}
+</div>
+
+<div class="form-group">
+    <label for="accountDistrict">District</label>
+    {{ form_select_district('district', city, district, {
+        id: 'accountDistrict',
+        class: 'form-control',
+        emptyOption: '',
+        'data-request': 'onInit',
+        'data-request-data': {
+            'province': province,
+            'city': city,
+        },
+        'data-request-update': {
+            (__SELF__ ~ '::locations'): '#partialLocations'
+        }
+    }) }}
+</div>
+
+<div class="form-group">
+    <label for="accountSubdistrict">Subdistrict</label>
+    {{ form_select_subdistrict('subdistrict', district, subdistrict, {
+        id: 'accountSubdistrict',
+        class: 'form-control',
+        emptyOption: '',
+        'data-request': 'onInit',
+        'data-request-data': {
+            'province': province,
+            'city': city,
+            'district': district,
+        },
+        'data-request-update': {
+            (__SELF__ ~ '::locations'): '#partialLocations'
+        }
+    }) }}
+</div>

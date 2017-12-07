@@ -1,24 +1,3 @@
-<div class="row">
-    {% if couriers|length > 1 %}
-        <div class="col-md-3">
-                <label for="">Couriers</label>
-                <select 
-                    class="form-control select2" id="couriers"
-                    data-request="onSelectCourier" 
-                    data-request-update="'{{ __SELF__ }}::country': '#country', '{{ __SELF__ }}::state': '#state'" 
-                    name="courier" 
-                    required>
-                    <option value="" selected disabled>Select courier</option>
-                    {% for alias, name in couriers %}
-                    <option value="{{ alias }}">{{ name }}</option>
-                    {% endfor %}
-                </select>
-        </div>
-    {% endif %}
-    <div class="col-md-3" id="country">
-        {% partial __SELF__ ~ '::country' %}
-    </div>
-    <div class="col-md-3" id="state">
-        {% partial __SELF__ ~ '::state' %}
-    </div>
+<div id="partialLocations" class="row">
+    {% partial __SELF__ ~ '::locations' %}
 </div>
