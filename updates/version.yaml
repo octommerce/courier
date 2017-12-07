@@ -1,1 +1,4 @@
 1.0.1: First version of courier
+1.0.2: 
+    - Create locations table
+    - create_locations_table.php
