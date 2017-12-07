@@ -105,6 +105,9 @@ class Plugin extends PluginBase
                 'form_select_city'        => ['Octommerce\Courier\Models\Location', 'formSelectCity'],
                 'form_select_district'    => ['Octommerce\Courier\Models\Location', 'formSelectDistrict'],
                 'form_select_subdistrict' => ['Octommerce\Courier\Models\Location', 'formSelectSubdistrict'],
+                'json_decode'             => function($json, $assoc = false) {
+                    return json_decode($json, $assoc);
+                }
             ]
         ];
     }

@@ -2,6 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Octommerce\Courier\Classes\CourierManager;
+use Octommerce\Courier\Models\Location;
 
 class Cost extends ComponentBase
 {
@@ -36,6 +37,44 @@ class Cost extends ComponentBase
     public function onSelectCourier()
     {
         $this->fetchShippingDestinations(post('courier'));
+    }
+
+    public function onGetCosts()
+    {
+        $this->page['costs'] = $this->getCosts();
+    }
+
+    protected function getCosts()
+    {
+        //TODO: Get selected courier
+        $courierAlias = 'jne';
+        $courier = $this->getCourier($courierAlias);
+
+        return $courier->getCosts([
+            'from'   => $this->getShippingFrom(),
+            'thru'   => $this->getThru(),
+            'weight' => $this->getWeight()
+        ]);
+    }
+
+    protected function getShippingFrom()
+    {
+        //TODO: Get shipping from code from backend setting
+        return 'CGK10000';
+    }
+
+    protected function getThru()
+    {
+        $code = post('subdistrict');
+
+        //TODO: select dynamic courier code
+        return Location::whereCode($code)->first()->jne_code;
+    }
+
+    protected function getWeight()
+    {
+        //TODO: Get products weight from cart
+        return 1;
     }
 
     /**
