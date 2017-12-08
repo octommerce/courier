@@ -1,8 +1,10 @@
 <?php namespace Octommerce\Courier\Components;
 
+use ApplicationException;
 use Cms\Classes\ComponentBase;
 use Octommerce\Courier\Classes\CourierManager;
 use Octommerce\Courier\Models\Location;
+use Octommerce\Courier\Models\Settings;
 
 class Cost extends ComponentBase
 {
@@ -59,8 +61,15 @@ class Cost extends ComponentBase
 
     protected function getShippingFrom()
     {
-        //TODO: Get shipping from code from backend setting
-        return 'CGK10000';
+        $originCity = Settings::get('origin_city');
+        $location = Location::whereCode($originCity)->first();
+
+        if ( ! $location) {
+            throw new ApplicationException('Please set shipping from on backend settings');
+        }
+
+        //TODO: dynamic courier 
+        return $location->jne_code;
     }
 
     protected function getThru()
