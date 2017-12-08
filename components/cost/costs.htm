@@ -1,8 +1,9 @@
 <div class="form-group col-md-6">
     <label>Price</label>
-    <select class="form-control" name="service_code">
-        {% set costs = json_decode(costs) %}
-        {% for cost in costs.price %}
+    <select class="form-control" name="service_code"
+        data-request="onSelectService"
+        >
+        {% for cost in costs %}
         <option value="{{ cost.code_service }}">{{ cost.service_display }} (Rp {{ cost.price}})</option>
         {% endfor %}
     </select>

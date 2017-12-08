@@ -1,6 +1,8 @@
 <?php namespace Octommerce\Courier\Components;
 
 use Cart;
+use Cache;
+use Event;
 use ApplicationException;
 use Cms\Classes\ComponentBase;
 use Octommerce\Courier\Classes\CourierManager;
@@ -53,11 +55,33 @@ class Cost extends ComponentBase
         $courierAlias = 'jne';
         $courier = $this->getCourier($courierAlias);
 
-        return $courier->getCosts([
+        $costs = $courier->getCosts([
             'from'   => $this->getShippingFrom(),
             'thru'   => $this->getThru(),
             'weight' => $this->getWeight()
         ]);
+
+        /**
+         * Cache shipping costs and give the name from cart id
+         **/
+        Cache::put(Cart::get()->id, $costs, 5);
+
+        return $costs;
+    }
+
+    public function onSelectService()
+    {
+        $costs = Cache::get(Cart::get()->id);
+        $costDetail = $this->getCostDetailByServiceCode($costs, post('service_code'));
+
+        Event::fire('octommerce.courier.afterSelectService', [Cart::get(), $costDetail]);
+    }
+
+    private function getCostDetailByServiceCode($costs, $serviceCode)
+    {
+        return collect($costs)->filter(function($cost) use ($serviceCode) {
+            return $cost['service_code'] == $serviceCode;
+        })->first();
     }
 
     protected function getShippingFrom()
