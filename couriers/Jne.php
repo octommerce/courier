@@ -73,7 +73,7 @@ class Jne extends Courier
         }catch(Exception $e){
             throw new SystemException($e->getMessage());
         }
-        return $response->body;
+        return json_decode($response->body, true)['price'];
 
     }
 
