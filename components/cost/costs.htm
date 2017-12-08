@@ -4,7 +4,7 @@
         data-request="onSelectService"
         >
         {% for cost in costs %}
-        <option value="{{ cost.code_service }}">{{ cost.service_display }} (Rp {{ cost.price}})</option>
+        <option value="{{ cost.service_code }}">{{ cost.service_display }} (Rp {{ cost.price}})</option>
         {% endfor %}
     </select>
 </div>
