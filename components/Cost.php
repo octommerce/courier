@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Courier\Components;
 
+use Cart;
 use ApplicationException;
 use Cms\Classes\ComponentBase;
 use Octommerce\Courier\Classes\CourierManager;
