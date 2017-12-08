@@ -1,0 +1,22 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        origin_shipping:
+            label: Shipping from
+            type: section
+            comment: Select shipping location from
+            tab: General
+        origin_province:
+            label: Origin Province
+            type: dropdown
+            span: auto
+            tab: General
+        origin_city:
+            label: Origin city
+            type: dropdown
+            dependsOn: origin_province
+            span: auto
+            tab: General

@@ -24,6 +24,21 @@ class Plugin extends PluginBase
         ];
     }
 
+	public function registerSettings()
+	{
+		return [
+			'courier' => [
+				'label'       => 'Courier',
+				'description' => 'Manage courier plugin by octommerce',
+				'category'    => 'Courier',
+				'icon'        => 'icon-truck',
+                'class'       => 'Octommerce\Courier\Models\Settings',
+				'order'       => 500,
+				'keywords'    => 'courier shipping'
+			]
+		];
+	}
+
     /**
      * Register method, called when the plugin is first registered.
      *
