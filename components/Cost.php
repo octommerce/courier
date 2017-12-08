@@ -64,7 +64,7 @@ class Cost extends ComponentBase
         /**
          * Cache shipping costs and give the name from cart id
          **/
-        Cache::put(Cart::get()->id, $costs, 5);
+        Cache::put(Cart::get()->id, $costs, 60);
 
         return $costs;
     }
