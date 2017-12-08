@@ -82,8 +82,7 @@ class Cost extends ComponentBase
 
     protected function getWeight()
     {
-        //TODO: Get products weight from cart
-        return 1;
+        return Cart::get()->total_weight ?: 1;
     }
 
     /**
