@@ -111,6 +111,21 @@ class Jne extends Courier
     
     }
 
+    public function availableServices()
+    {
+        return [
+            'JTR'     => 'JTR',
+            'JTR250'  => 'JTR250',
+            'JTR<150' => 'JTR<150',
+            'JTR>250' => 'JTR>250',
+            'OKE15'   => 'OKE15',
+            'POPBOX'  => 'POPBOX',
+            'REG15'   => 'REG15',
+            'SPS15'   => 'SPS15',
+            'YES15'   => 'YES15',
+        ];
+    }
+
     private function getErrorMessage($response, $defaultMsg = 'Something went wrong')
     {
         $body = json_decode($response->body);

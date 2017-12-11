@@ -39,4 +39,6 @@ abstract class Courier
     abstract public function track($awb);
 
     abstract public function generateAwb($data);
+
+    abstract public function availableServices();
 }

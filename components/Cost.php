@@ -77,6 +77,11 @@ class Cost extends ComponentBase
         Event::fire('octommerce.courier.afterSelectService', [Cart::get(), $costDetail]);
     }
 
+    public function getDisableServices()
+    {
+        return Settings::get('disable_services');
+    }
+
     private function getCostDetailByServiceCode($costs, $serviceCode)
     {
         return collect($costs)->filter(function($cost) use ($serviceCode) {

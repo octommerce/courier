@@ -20,3 +20,13 @@ tabs:
             dependsOn: origin_province
             span: auto
             tab: General
+        services:
+            label: Disable Service
+            type: section
+            comment: Select service(s) want to disable
+            tab: General
+        disable_services:
+            label: Services
+            type: checkboxlist
+            tab: General
+

@@ -3,7 +3,8 @@
     <select class="form-control" name="service_code"
         data-request="onSelectService"
         >
-        {% for cost in costs %}
+        {% set disableServices = __SELF__.getDisableServices() %}
+        {% for cost in costs if cost.service_code not in disableServices %}
         <option value="{{ cost.service_code }}">{{ cost.service_display }} (Rp {{ cost.price}})</option>
         {% endfor %}
     </select>

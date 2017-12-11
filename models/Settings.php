@@ -2,6 +2,7 @@
 
 use Model;
 use Octommerce\Courier\Models\Location;
+use Octommerce\Courier\Classes\CourierManager;
 
 /**
  * Settings Model
@@ -27,5 +28,17 @@ class Settings extends Model
             return [];
 
         return Location::getNameList($this->origin_province);
+    }
+
+    public function getDisableServicesOptions()
+    {
+        $cm = CourierManager::instance();
+        $services = [];
+
+        return collect($cm->getCouriers())->map(function($services, $alias) use ($cm) {
+            return $cm->findByAlias($alias)->availableServices();
+        })
+        ->collapse()
+        ->all();
     }
 }
