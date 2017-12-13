@@ -28,6 +28,7 @@ class Cost extends ComponentBase
     public function onRun()
     {
         $this->page['couriers'] = $couriers = $this->getCouriers();
+        $this->page['shippingCosts'] = $this->loadDefaultShippingCosts();
 
         /**
          * If only one courier, get the available shipping destinations
@@ -45,12 +46,23 @@ class Cost extends ComponentBase
         $this->fetchShippingDestinations(post('courier'));
     }
 
+    protected function loadDefaultShippingCosts()
+    {
+        $user = Auth::getUser();
+
+        if ( ! $user && isset($user->location) ) {
+            return null;
+        }
+
+        return $this->getCosts($user->location->subdistrict->code);
+    }
+
     public function onGetCosts()
     {
         $this->page['costs'] = $this->getCosts();
     }
 
-    protected function getCosts()
+    protected function getCosts($code = null)
     {
         //TODO: Get selected courier
         $courierAlias = 'jne';
@@ -58,7 +70,7 @@ class Cost extends ComponentBase
 
         $costs = $courier->getCosts([
             'from'   => $this->getShippingFrom(),
-            'thru'   => $this->getThru(),
+            'thru'   => $this->getThru($code),
             'weight' => $this->getWeight()
         ]);
 
@@ -115,9 +127,9 @@ class Cost extends ComponentBase
         return $location->jne_code;
     }
 
-    protected function getThru()
+    protected function getThru($code = null)
     {
-        $code = post('subdistrict');
+        $code = $code ?: post('subdistrict');
 
         //TODO: select dynamic courier code
         return Location::whereCode($code)->first()->jne_code;
