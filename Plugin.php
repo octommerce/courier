@@ -3,12 +3,15 @@
 use Backend;
 use System\Classes\PluginBase;
 use Octommerce\Courier\Classes\CourierManager;
+use RainLab\User\Models\User;
 
 /**
  * courier Plugin Information File
  */
 class Plugin extends PluginBase
 {
+    public $require = ['RainLab.User'];
+
     /**
      * Returns information about this plugin.
      *
@@ -57,6 +60,14 @@ class Plugin extends PluginBase
     public function boot()
     {
         CourierManager::instance()->addCourier('Octommerce\Courier\Couriers\Jne');
+
+        User::extend(function($model) {
+            $model->hasOne['location'] = [
+                'Octommerce\Courier\Models\Location', 
+                'key'      => 'code',
+                'otherKey' => 'location_code'
+            ];
+        });
     }
 
     /**
