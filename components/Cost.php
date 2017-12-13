@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Courier\Components;
 
+use Auth;
 use Cart;
 use Cache;
 use Event;
@@ -74,12 +75,24 @@ class Cost extends ComponentBase
         $costs = Cache::get(Cart::get()->id);
         $costDetail = $this->getCostDetailByServiceCode($costs, post('service_code'));
 
+        $this->saveLocationCodeToUser();
+
         Event::fire('octommerce.courier.afterSelectService', [Cart::get(), $costDetail]);
     }
 
     public function getDisableServices()
     {
         return Settings::get('disable_services');
+    }
+
+    private function saveLocationCodeToUser()
+    {
+        if ( ! $user = Auth::getUser()) {
+            return;
+        }
+
+        $user->location_code = post('subdistrict');
+        $user->save();
     }
 
     private function getCostDetailByServiceCode($costs, $serviceCode)

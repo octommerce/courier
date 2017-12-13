@@ -1,5 +1,7 @@
+{% set loc = user.location %}
+
 <div id="partialLocations" class="row">
-    {% partial __SELF__ ~ '::locations' %}
+    {% partial __SELF__ ~ '::locations' province=loc.province.code city=loc.city.code district=loc.district.code subdistrict=loc.subdistrict.code %}
 </div>
 
 <div id="shipping-costs" class="row">
