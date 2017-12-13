@@ -2,3 +2,6 @@
 1.0.2: 
     - Create locations table
     - create_locations_table.php
+1.0.3: 
+    - Add location_code column to users table
+    - add_location_code_column_to_users_table.php
