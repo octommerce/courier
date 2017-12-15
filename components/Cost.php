@@ -50,7 +50,7 @@ class Cost extends ComponentBase
     {
         $user = Auth::getUser();
 
-        if ( ! $user && isset($user->location) ) {
+        if ( ! $user || isset($user->location) ) {
             return null;
         }
 
