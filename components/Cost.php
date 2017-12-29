@@ -88,8 +88,12 @@ class Cost extends ComponentBase
         $costDetail = $this->getCostDetailByServiceCode($costs, post('service_code'));
 
         $this->saveLocationCodeToUser();
+        $cart = Cart::get();
 
-        Event::fire('octommerce.courier.afterSelectService', [Cart::get(), $costDetail]);
+        Event::fire('octommerce.courier.afterSelectService', [$cart, $costDetail]);
+
+        $this->page['shipping_cost_detail'] = $costDetail;
+        $this->page['cart'] = $cart;
     }
 
     public function getDisableServices()
