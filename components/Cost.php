@@ -165,6 +165,17 @@ class Cost extends ComponentBase
         return $this->courierManager()->getCouriers($activeOnly = false);
     }
 
+    public function hasChildren($locationCode)
+    {
+        $location = Location::whereCode($locationCode)->first();
+
+        if (!$location or !isset($location->children)) return false;
+
+        return $location->children->reject(function($location) {
+            return $location->name == '-' or $location->name == null;
+        })->count() > 0;
+    }
+
     protected function getCourier($alias = null)
     {
         if (is_null($alias)) {

@@ -16,6 +16,7 @@
     }) }}
 </div>
 
+{% if __SELF__.hasChildren(province) %}
 <div class="form-group col-md-6">
     <label for="accountCity">City</label>
     {{ form_select_city('city', province, city, {
@@ -31,7 +32,9 @@
         }
     }) }}
 </div>
+{% endif %}
 
+{% if __SELF__.hasChildren(city) %}
 <div class="form-group col-md-6">
     <label for="accountDistrict">District</label>
     {{ form_select_district('district', city, district, {
@@ -48,21 +51,24 @@
         }
     }) }}
 </div>
+{% endif %}
 
-<div class="form-group col-md-6">
-    <label for="accountSubdistrict">Subdistrict</label>
-    {{ form_select_subdistrict('subdistrict', district, subdistrict, {
-        id: 'accountSubdistrict',
-        class: 'form-control',
-        emptyOption: '',
-        'data-request': 'onGetCosts',
-        'data-request-data': {
-            'province': province,
-            'city': city,
-            'district': district
-        },
-        'data-request-update': {
-            (__SELF__ ~ '::costs'): '#shipping-costs'
-        }
-    }) }}
-</div>
+{% if __SELF__.hasChildren(district) %}
+    <div class="form-group col-md-6">
+        <label for="accountSubdistrict">Subdistrict {{ tes }}</label>
+        {{ form_select_subdistrict('subdistrict', district, subdistrict, {
+            id: 'accountSubdistrict',
+            class: 'form-control',
+            emptyOption: '',
+            'data-request': 'onGetCosts',
+            'data-request-data': {
+                'province': province,
+                'city': city,
+                'district': district
+            },
+            'data-request-update': {
+                (__SELF__ ~ '::costs'): '#shipping-costs'
+            }
+        }) }}
+    </div>
+{% endif %}
