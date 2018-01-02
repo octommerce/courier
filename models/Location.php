@@ -68,7 +68,7 @@ class Location extends Model
 
     public function children()
     {
-        return self::where('code', 'like', $this->code . '%');
+        return self::where('code', 'like', $this->code . '.%');
     }
 
     public function getChildrenAttribute()
