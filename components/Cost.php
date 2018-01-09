@@ -59,7 +59,22 @@ class Cost extends ComponentBase
 
     public function onGetCosts()
     {
-        $this->page['costs'] = $this->getCosts();
+        $locationCode = null;
+        $validSubdistricts = $this->getSubdistricts($includeInvalid = false);
+        $invalidSubdistricts = $this->getSubdistricts($includeInvalid = true);
+
+        // Request comes when selecting district
+        if ($invalidSubdistricts->count() > $validSubdistricts->count()) {
+            $locationCode = $invalidSubdistricts->first()->code;
+            $this->page['costs'] = $this->getCosts($locationCode);
+            $this->page['thru'] = $locationCode;
+        }
+
+        // Request comes when selecting subdistrict
+        if ($locationCode = array_get(post(), 'subdistrict')) {
+            $this->page['costs'] = $this->getCosts();
+            $this->page['thru'] = $locationCode;
+        }
     }
 
     protected function getCosts($code = null)
@@ -107,7 +122,7 @@ class Cost extends ComponentBase
             return;
         }
 
-        $user->location_code = post('subdistrict');
+        $user->location_code = post('thru');
         $user->save();
     }
 
@@ -165,15 +180,36 @@ class Cost extends ComponentBase
         return $this->courierManager()->getCouriers($activeOnly = false);
     }
 
-    public function hasChildren($locationCode)
+    public function hasChildren($locationCode, $includeInvalid = false)
+    {
+        return $this->getChildren($locationCode, $includeInvalid)->count() > 0;
+    }
+
+    /**
+     * Check if the location has valid subdistrict (With location name)
+     *
+     * @param string $locationCode
+     * @return boolean
+     */
+    public function getSubdistricts($includeInvalid = false)
+    {
+        // Ensure isn't subdistrict. So we don't need to check it
+        if (array_get(post(), 'subdistrict')) return collect();
+
+        $districtCode = array_get(post(), 'district');
+
+        return $this->getChildren($districtCode, $includeInvalid);
+    }
+
+    protected function getChildren($locationCode, $includeInvalid = false)
     {
         $location = Location::whereCode($locationCode)->first();
 
-        if (!$location or !isset($location->children)) return false;
+        if ( ! $location) return collect();
 
-        return $location->children->reject(function($location) {
-            return $location->name == '-' or $location->name == null;
-        })->count() > 0;
+        return $location->children->filter(function($location) use ($includeInvalid) {
+            return ($location->name != '-' and $location->name != null) or $includeInvalid;
+        });
     }
 
     protected function getCourier($alias = null)

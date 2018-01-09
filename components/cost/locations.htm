@@ -11,8 +11,10 @@
         emptyOption: '',
         'data-request': 'onInit',
         'data-request-update': {
-            (__SELF__ ~ '::locations'): '#partialLocations'
-        }
+            (__SELF__ ~ '::locations'): '#partialLocations',
+            (__SELF__ ~ '::costs'): '#shipping-costs'
+        },
+        'data-request-form': '#accountProvince'
     }) }}
 </div>
 
@@ -28,8 +30,10 @@
             'province': province
         },
         'data-request-update': {
-            (__SELF__ ~ '::locations'): '#partialLocations'
-        }
+            (__SELF__ ~ '::locations'): '#partialLocations',
+            (__SELF__ ~ '::costs'): '#shipping-costs'
+        },
+        'data-request-form': '#accountCity'
     }) }}
 </div>
 {% endif %}
@@ -41,21 +45,23 @@
         id: 'accountDistrict',
         class: 'form-control',
         emptyOption: '',
-        'data-request': 'onInit',
+        'data-request': 'onGetCosts',
         'data-request-data': {
             'province': province,
             'city': city,
         },
         'data-request-update': {
-            (__SELF__ ~ '::locations'): '#partialLocations'
-        }
+            (__SELF__ ~ '::locations'): '#partialLocations',
+            (__SELF__ ~ '::costs'): '#shipping-costs'
+        },
+        'data-request-form': '#accountDistrict'
     }) }}
 </div>
 {% endif %}
 
 {% if __SELF__.hasChildren(district) %}
     <div class="form-group col-md-6">
-        <label for="accountSubdistrict">Subdistrict {{ tes }}</label>
+        <label for="accountSubdistrict">Subdistrict</label>
         {{ form_select_subdistrict('subdistrict', district, subdistrict, {
             id: 'accountSubdistrict',
             class: 'form-control',
@@ -68,7 +74,8 @@
             },
             'data-request-update': {
                 (__SELF__ ~ '::costs'): '#shipping-costs'
-            }
+            },
+            'data-request-form': '#accountSubdistrict'
         }) }}
     </div>
 {% endif %}

@@ -1,12 +1,19 @@
+<input type="hidden" value="{{ thru }}" name="thru">
+
+{% if costs|length %}
 <div class="form-group col-md-6">
     <label>Price</label>
     <select class="form-control" name="service_code"
         data-request="onSelectService"
+        data-request-update="'shipping/cost-detail': '#shipping-cost-detail', 'checkout/total-price': '#total-price'"
         >
         {% set disableServices = __SELF__.getDisableServices() %}
         {% for cost in costs if cost.service_code not in disableServices %}
+        {% if loop.first %}
+            <option value="" disabled selected></option>
+        {% endif %}
         <option value="{{ cost.service_code }}">{{ cost.service_display }} (Rp {{ cost.price}})</option>
         {% endfor %}
     </select>
 </div>
-
+{% endif %}
