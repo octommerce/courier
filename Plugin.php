@@ -1,9 +1,11 @@
 <?php namespace Octommerce\Courier;
 
+use Event;
 use Backend;
 use System\Classes\PluginBase;
 use Octommerce\Courier\Classes\CourierManager;
 use RainLab\User\Models\User;
+use Octommerce\Courier\Models\Settings;
 
 /**
  * courier Plugin Information File
@@ -67,6 +69,10 @@ class Plugin extends PluginBase
                 'key'      => 'code',
                 'otherKey' => 'location_code'
             ];
+        });
+
+        Event::listen('cms.page.beforeDisplay', function($controller, $url, $page) {
+            $controller->vars['oc_courier_settings'] = Settings::instance();
         });
     }
 
