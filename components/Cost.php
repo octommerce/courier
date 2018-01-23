@@ -4,6 +4,7 @@ use Auth;
 use Cart;
 use Cache;
 use Event;
+use Exception;
 use ApplicationException;
 use Cms\Classes\ComponentBase;
 use Octommerce\Courier\Classes\CourierManager;
@@ -83,11 +84,15 @@ class Cost extends ComponentBase
         $courierAlias = 'jne';
         $courier = $this->getCourier($courierAlias);
 
-        $costs = $courier->getCosts([
-            'from'   => $this->getShippingFrom(),
-            'thru'   => $this->getThru($code),
-            'weight' => $this->getWeight()
-        ]);
+        try {
+            $costs = $courier->getCosts([
+                'from'   => $this->getShippingFrom(),
+                'thru'   => $this->getThru($code),
+                'weight' => $this->getWeight()
+            ]);
+        } catch (Exception $e) {
+            throw new ApplicationException($e->getMessage());
+        }
 
         /**
          * Cache shipping costs and give the name from cart id
