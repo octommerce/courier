@@ -133,9 +133,28 @@ class Cost extends ComponentBase
 
     private function getCostDetailByServiceCode($costs, $serviceCode)
     {
-        return collect($costs)->filter(function($cost) use ($serviceCode) {
+        $costDetail = collect($costs)->filter(function($cost) use ($serviceCode) {
             return $cost['service_code'] == $serviceCode;
         })->first();
+
+        return array_merge($costDetail, $this->getDiscountDetail($costDetail));
+    }
+
+    private function getDiscountDetail($costDetail)
+    {
+        if (Cart::get()->subtotal <= Settings::get('shipping_min_subtotal')) {
+            return [
+                'has_discount'         => false,
+                'price_after_discount' => $costDetail['price']
+            ];
+        }
+
+        $newPrice = $costDetail['price'] - Settings::get('shipping_max_subsidy');
+
+        return [
+            'has_discount'         => true,
+            'price_after_discount' => $newPrice <= 0 ? 0 : $newPrice // Set to zero if discounted price negative
+        ];
     }
 
     protected function getShippingFrom()
