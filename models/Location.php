@@ -83,14 +83,18 @@ class Location extends Model
         return "^{$locationCode}.[0-9]+$";
     }
 
-    public static function formSelectProvince($name, $selectedValue = null, $options = [])
+    public static function formSelectProvince($name, $selectedValue = null, $options = [], $filter = [])
     {
-        return Form::select($name, self::getNameList(), $selectedValue, $options);
+        $data = self::filterData(self::getNameList(), $filter);
+
+        return Form::select($name, $data, $selectedValue, $options);
     }
 
-    public static function formSelectCity($name, $province, $selectedValue = null, $options = [])
+    public static function formSelectCity($name, $province, $selectedValue = null, $options = [], $filter = [])
     {
-        return Form::select($name, self::getNameList($province), $selectedValue, $options);
+        $data = self::filterData(self::getNameList($province), $filter);
+
+        return Form::select($name, $data, $selectedValue, $options);
     }
 
     public static function formSelectDistrict($name, $city, $selectedValue = null, $options = [])
@@ -129,5 +133,19 @@ class Location extends Model
         $arg = LocationHelper::codeByLevel($this->code, 4);
 
         return self::where('code', $arg)->first();
+    }
+
+    protected static function filterData($data, $filter)
+    {
+        if ($only = array_get($filter, 'only')) {
+            trace_log($data);
+            return array_only($data, $only);
+        }
+
+        if ($except = array_get($filter, 'except')) {
+            return array_except($data, $only);
+        }
+
+        return $data;
     }
 }
