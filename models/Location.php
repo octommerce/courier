@@ -138,7 +138,6 @@ class Location extends Model
     protected static function filterData($data, $filter)
     {
         if ($only = array_get($filter, 'only')) {
-            trace_log($data);
             return array_only($data, $only);
         }
 
