@@ -137,7 +137,7 @@ class Cost extends ComponentBase
             return $cost['service_code'] == $serviceCode;
         })->first();
 
-        return array_merge($costDetail, $this->getDiscountDetail($costDetail));
+        return array_merge((array)$costDetail, $this->getDiscountDetail($costDetail));
     }
 
     private function getDiscountDetail($costDetail)
