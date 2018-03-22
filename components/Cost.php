@@ -114,6 +114,7 @@ class Cost extends ComponentBase
 
         $this->page['shipping_cost_detail'] = $costDetail;
         $this->page['cart'] = $cart;
+        $this->page['user'] = Auth::getUser();
     }
 
     public function getDisableServices()
