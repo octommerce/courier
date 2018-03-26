@@ -54,4 +54,40 @@ tabs:
                 condition: checked
                 field: has_discount
 
+        shipper_name:
+            label: Name
+            span: auto
+            required: true
+            tab: Shipper
+        shipper_addr1:
+            label: Address 1
+            span: left
+            required: true
+            tab: Shipper
+        shipper_city:
+            label: City
+            span: auto
+            required: true
+            tab: Shipper
+        shipper_addr2:
+            label: Address 2
+            span: left
+            required: true
+            tab: Shipper
+        shipper_region:
+            label: Region
+            span: auto
+            required: false
+            tab: Shipper
+        shipper_zip:
+            label: Post code
+            span: auto
+            required: true
+            tab: Shipper
+        shipper_phone:
+            label: Phone
+            span: auto
+            required: true
+            tab: Shipper
+
 
