@@ -172,11 +172,15 @@ class Jne extends Courier
         ];
     }
 
-    private function getErrorMessage($response, $defaultMsg = 'Something went wrong')
+    private function getErrorMessage($response, $defaultMsg = null)
     {
         $body = json_decode($response->body);
 
         if (isset($body->error)) return $body->error;
+
+        if (isset($body->detail)) return $body->detail[0]->reason;
+
+        if (is_null($defaultMsg)) return $response->body;
 
         return $defaultMsg;
     }
