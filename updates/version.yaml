@@ -5,3 +5,6 @@
 1.0.3: 
     - Add location_code column to users table
     - add_location_code_column_to_users_table.php
+1.0.4: 
+    - Add oc_shipping_data to carts and orders tables
+    - add_oc_shipping_data_to_carts_and_orders_tables.php
