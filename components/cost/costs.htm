@@ -7,8 +7,8 @@
         data-request="onSelectService"
         data-request-update="'shipping/cost-detail': '#shipping-cost-detail', 'checkout/total-price': '#total-price'"
         >
-        {% set disableServices = __SELF__.getDisableServices() %}
-        {% for cost in costs if cost.service_code not in disableServices %}
+        {% set allowedServices = __SELF__.getAllowedServices() %}
+        {% for cost in costs if cost.service_code in allowedServices %}
         {% if loop.first %}
             <option value="" disabled selected></option>
         {% endif %}

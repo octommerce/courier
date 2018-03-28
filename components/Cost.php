@@ -117,9 +117,9 @@ class Cost extends ComponentBase
         $this->page['user'] = Auth::getUser();
     }
 
-    public function getDisableServices()
+    public function getAllowedServices()
     {
-        return Settings::get('disable_services');
+        return Settings::get('allowed_services');
     }
 
     private function saveLocationCodeToUser()

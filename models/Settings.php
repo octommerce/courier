@@ -30,7 +30,7 @@ class Settings extends Model
         return Location::getNameList($this->origin_province);
     }
 
-    public function getDisableServicesOptions()
+    public function getAllowedServicesOptions()
     {
         $cm = CourierManager::instance();
         $services = [];

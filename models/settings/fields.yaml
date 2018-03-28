@@ -21,11 +21,11 @@ tabs:
             span: auto
             tab: General
         services:
-            label: Disable Service
+            label: Allowed Service
             type: section
-            comment: Select service(s) want to disable
+            comment: Select service(s) want to display
             tab: General
-        disable_services:
+        allowed_services:
             label: Services
             type: checkboxlist
             tab: General
