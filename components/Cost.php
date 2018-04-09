@@ -181,7 +181,7 @@ class Cost extends ComponentBase
 
     protected function getWeight()
     {
-        return Cart::get()->total_weight ?: 1;
+        return Cart::get()->total_weight ? (Cart::get()->total_weight / 1000) : 1;
     }
 
     /**
