@@ -10,6 +10,7 @@ use Cms\Classes\ComponentBase;
 use Octommerce\Courier\Classes\CourierManager;
 use Octommerce\Courier\Models\Location;
 use Octommerce\Courier\Models\Settings;
+use Octommerce\Courier\Exceptions\ServerTimeoutException;
 
 class Cost extends ComponentBase
 {
@@ -91,6 +92,9 @@ class Cost extends ComponentBase
                 'weight' => $this->getWeight()
             ]);
         } catch (Exception $e) {
+            if ($e instanceof ServerTimeoutException) {
+                throw new ApplicationException(sprintf('Sorry, %s\'s server was down', $courier->name));
+            }
             throw new ApplicationException($e->getMessage());
         }
 

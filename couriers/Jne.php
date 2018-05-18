@@ -4,6 +4,7 @@ use Octommerce\Courier\Contracts\Courier;
 use Http;
 use Exception;
 use SystemException;
+use Octommerce\Courier\Exceptions\ServerTimeoutException;
 
 class Jne extends Courier
 {
@@ -65,16 +66,20 @@ class Jne extends Courier
                 $http->data('thru', $data['thru']);
                 $http->data('weight', $data['weight']);
 
+                $http->timeout(1);
             });
 
-            if ($response->code != 200) {
-                throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
+            switch($response->code) {
+                case 0:
+                    throw new ServerTimeoutException('Server down');
+                case 200:
+                    return json_decode($response->body, true)['price'];
+                default:
+                    throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
             }
         }catch(Exception $e){
-            throw new SystemException($e->getMessage());
+            throw $e;
         }
-        return json_decode($response->body, true)['price'];
-
     }
 
     public function track($awb) 
@@ -85,15 +90,21 @@ class Jne extends Courier
             $response = Http::post($url,function($http){
                 $http->data('username', $this->getUsername());
                 $http->data('api_key', $this->getApiKey());
+
+                $http->timeout(1);
             });
 
-            if ($response->code != 200) {
-                throw new Exception($this->getErrorMessage($response, 'Failed to get track'));
+            switch($response->code) {
+                case 0:
+                    throw new ServerTimeoutException('Server down');
+                case 200:
+                    return $response->body;
+                default:
+                    throw new Exception($this->getErrorMessage($response, 'Failed to get track'));
             }
         }catch(Exception $e){
-            throw new SystemException($e->getMessage());
+            throw $e;
         }
-        return $response->body;
     }
 
     public function getUsername()
