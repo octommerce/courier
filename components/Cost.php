@@ -4,6 +4,7 @@ use Auth;
 use Cart;
 use Cache;
 use Event;
+use Flash;
 use Exception;
 use ApplicationException;
 use Cms\Classes\ComponentBase;
@@ -56,7 +57,11 @@ class Cost extends ComponentBase
             return null;
         }
 
-        return $this->getCosts($user->location->subdistrict->code);
+        try {
+            return $this->getCosts($user->location->subdistrict->code);
+        } catch (Exception $e) {
+            Flash::error($e->getMessage());
+        }
     }
 
     public function onGetCosts()
