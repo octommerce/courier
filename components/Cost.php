@@ -119,7 +119,7 @@ class Cost extends ComponentBase
         $this->saveLocationCodeToUser();
         $cart = Cart::get();
 
-        Event::fire('octommerce.courier.afterSelectService', [$cart, $costDetail]);
+        Event::fire('octommerce.courier.afterSelectService', [$cart, &$costDetail, post()]);
 
         $this->page['shipping_cost_detail'] = $costDetail;
         $this->page['cart'] = $cart;
