@@ -73,7 +73,7 @@ class Jne extends Courier
                 case 0:
                     throw new ServerTimeoutException('Server down');
                 case 200:
-                    return json_decode($response->body, true)['price'];
+                    return $this->sortByPriceAsc(json_decode($response->body, true)['price']);
                 default:
                     throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
             }
@@ -184,6 +184,11 @@ class Jne extends Courier
             'CTCSPS15' => 'CTCSPS15',
             'CTCYES15' => 'CTCYES15',
         ];
+    }
+
+    protected function sortByPriceAsc($costs)
+    {
+        return collect($costs)->sortBy('price');
     }
 
     private function getErrorMessage($response, $defaultMsg = null)
