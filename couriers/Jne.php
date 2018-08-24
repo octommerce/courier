@@ -66,7 +66,7 @@ class Jne extends Courier
                 $http->data('thru', $data['thru']);
                 $http->data('weight', $data['weight']);
 
-                $http->timeout(1);
+                $http->timeout(10);
             });
 
             switch($response->code) {
