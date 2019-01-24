@@ -186,8 +186,12 @@ class Jne extends Courier
             'YES15'    => 'YES15',
             'YES19'    => 'YES19',
             'CTC15'    => 'CTC15',
+            'CTC19'    => 'CTC19',
             'CTCSPS15' => 'CTCSPS15',
+            'CTCSPS19' => 'CTCSPS19',
             'CTCYES15' => 'CTCYES15',
+            'CTCYES19' => 'CTCYES19',
+            'PELIKAN' => 'PELIKAN',
         ];
     }
 
