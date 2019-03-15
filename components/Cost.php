@@ -152,7 +152,7 @@ class Cost extends ComponentBase
 
     private function getDiscountDetail($costDetail)
     {
-        if (Cart::get()->subtotal <= Settings::get('shipping_min_subtotal')) {
+        if (Settings::get('has_discount') == false || Cart::get()->subtotal <= Settings::get('shipping_min_subtotal')) {
             return [
                 'has_discount'         => false,
                 'price_after_discount' => $costDetail['price']
