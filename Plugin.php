@@ -12,7 +12,7 @@ use Octommerce\Courier\Models\Settings;
  */
 class Plugin extends PluginBase
 {
-    public $require = ['RainLab.User'];
+    public $require = ['RainLab.User', 'Octommerce.Octommerce'];
 
     /**
      * Returns information about this plugin.
