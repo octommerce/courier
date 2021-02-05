@@ -78,7 +78,13 @@ class Jne extends Courier
                     throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
             }
         }catch(Exception $e){
-            throw $e;
+            switch($response->code) {
+                case 200:
+                    $message = data_get(json_decode($response->body, true), 'error', 'Sorry, there has some problem on Shipping Price');
+                    throw new Exception($message);
+                default:
+                    throw new Exception($this->getErrorMessage($response, 'Failed to get Price'));
+            }
         }
     }
 
